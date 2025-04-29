@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tower of Hanoi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Tower of Hanoi</h1>
+    <div id="controls">
+        <label for="diskCount">Number of disks:</label>
+        <select id="diskCount">
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+        <button onclick="resetGame()">Reset</button>
+    </div>
+    <div id="game-container">
+        <div id="game">
+            <div class="tower" data-index="0"></div>
+            <div class="tower" data-index="1"></div>
+            <div class="tower" data-index="2"></div>
+        </div>
+        <div id="labels">
+            <div class="label">Source</div>
+            <div class="label">Auxiliary</div>
+            <div class="label">Destination</div>
+        </div>
+    </div>
+    <p id="message"></p>
+    <p id="moves">Moves: 0</p>
+
+    <script src="game.js"></script>
+</body>
+</html>
