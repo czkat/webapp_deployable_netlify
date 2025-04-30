@@ -79,7 +79,8 @@
 
         const names = ['Source', 'Auxiliary', 'Destination'];
         if (from >= 0 && to >= 0) {
-            document.getElementById("hint").innerText = `Hint: Move disk ${smallestDisk.size} from ${names[from]} to ${names[to]}.`;
+            // document.getElementById("hint").innerText = `Hint: Move disk ${smallestDisk.size} from ${names[from]} to ${names[to]}.`;
+            document.getElementById("hint").innerText = `Hint: Move disk from ${names[from]} to ${names[to]}.`;
         } else {
             document.getElementById("hint").innerText = "No hint available.";
         }
