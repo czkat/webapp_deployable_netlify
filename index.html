@@ -51,7 +51,7 @@
             if (moveCount === 0) {
                 hint = "Start by moving the smallest disk. For an odd number of disks, move it to the destination tower; for even, move to the auxiliary tower.";
             } else if (state.isStuck) {
-                hint = "You seem stuck. Remember the pattern: move the smallest disk in a clockwise direction, then make the only valid move that doesn't involve the smallest disk.";
+                hint = "You seem stuck. Remember the pattern: move the smallest disk in a clockwise direction (A to B, B to C, or C to A), then make the only valid move that doesn't involve the smallest disk.";
             } else if (state.suboptimalMoves > 5) {
                 hint = "Your solution is taking longer than needed. Try to develop a consistent pattern when moving the disks.";
             } else if (state.nearCompletion) {
