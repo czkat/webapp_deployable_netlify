@@ -37,54 +37,65 @@
 
     <script src="game.js"></script>
     <script>
-    function showHint() {
-        const towerEls = document.querySelectorAll('.tower');
-        const towers = Array.from(towerEls).map(t => {
-            const disks = Array.from(t.children);
-            return disks.map(disk => ({
-                size: parseInt(disk.dataset.size),
-                el: disk
-            }));
-        });
-
-        let from = -1, to = -1;
-        let smallestDisk = null;
-
-        // Identify the topmost (last child) disk on each tower
-        towers.forEach((tower, i) => {
-            if (tower.length > 0) {
-                const topDisk = tower[tower.length - 1];
-                if (!smallestDisk || topDisk.size < smallestDisk.size) {
-                    smallestDisk = topDisk;
-                    from = i;
-                }
+        function showHint() {
+            // Calculate optimal solution steps
+            const optimalMoves = Math.pow(2, totalDisks) - 1;
+            const progress = Math.min(100, Math.round((moveCount / optimalMoves) * 100));
+            
+            // Analyze game state
+            const state = analyzeGameState();
+            
+            // Generate context-aware hints
+            let hint = "";
+            
+            if (moveCount === 0) {
+                hint = "Start by moving the smallest disk. For an odd number of disks, move it to the destination tower; for even, move to the auxiliary tower.";
+            } else if (state.isStuck) {
+                hint = "You seem stuck. Remember the pattern: move the smallest disk in a clockwise direction, then make the only valid move that doesn't involve the smallest disk.";
+            } else if (state.suboptimalMoves > 5) {
+                hint = "Your solution is taking longer than needed. Try to develop a consistent pattern when moving the disks.";
+            } else if (state.nearCompletion) {
+                hint = "You're almost there! Focus on moving the remaining smaller disks in the right sequence to build on top of the larger ones.";
+            } else {
+                // Choose a hint based on the specific game situation
+                const situationalHints = [
+                    "Look for the smallest disk - it should move in a consistent cycle between towers.",
+                    "After moving the smallest disk, there's always exactly one other valid move. Can you spot it?",
+                    "Think about which tower needs to be cleared to receive the next largest disk.",
+                    "The Tower of Hanoi has a recursive pattern. How you moved 2 disks is how you'll move groups of disks.",
+                    "Sometimes you need to make moves that temporarily seem to take you further from your goal."
+                ];
+                
+                // Choose a hint based on disk count, move count, and tower state
+                const hintIndex = (moveCount + totalDisks + towers[1].length) % situationalHints.length;
+                hint = situationalHints[hintIndex];
             }
-        });
-
-        if (!smallestDisk) {
-            document.getElementById("hint").innerText = "No hint available.";
-            return;
+            
+            document.getElementById("hint").innerHTML = hint;
         }
 
-        // Try to move to a legal target tower
-        for (let i = 0; i < 3; i++) {
-            if (i === from) continue;
-            const tower = towers[i];
-            const topDisk = tower[tower.length - 1];
-            if (!topDisk || topDisk.size > smallestDisk.size) {
-                to = i;
-                break;
-            }
+        function analyzeGameState() {
+            // Analyze the current game state to determine key characteristics
+            return {
+                isStuck: moveCount > 0 && previousMoveCount === moveCount, // Detect if player is stuck
+                suboptimalMoves: moveCount - calculateMinimumMoves(towers, totalDisks),
+                nearCompletion: towers[2].length >= totalDisks - 2,
+                // Add other state analysis as needed
+            };
         }
 
-        const names = ['Source', 'Auxiliary', 'Destination'];
-        if (from >= 0 && to >= 0) {
-            // document.getElementById("hint").innerText = `Hint: Move disk ${smallestDisk.size} from ${names[from]} to ${names[to]}.`;
-            document.getElementById("hint").innerText = `Hint: Move disk from ${names[from]} to ${names[to]}.`;
-        } else {
-            document.getElementById("hint").innerText = "No hint available.";
+        // Keep track of previous move count to detect when player is stuck
+        let previousMoveCount = 0;
+        setInterval(() => {
+            previousMoveCount = moveCount;
+        }, 5000);
+
+        function calculateMinimumMoves(currentTowers, diskCount) {
+            // A basic estimate of minimum moves needed from current state
+            // This is a simplified calculation
+            return Math.pow(2, diskCount) - 1 - towers[2].length * 2;
         }
-    }
+     
     </script>
 
 </body>
