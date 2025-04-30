@@ -35,56 +35,30 @@
     <p id="moves">Moves: 0</p>
     <p id="hint"></p>
 
+    <script src="game.js"></script>
     <script>
-        function createDisk(size) {
-            const disk = document.createElement('div');
-            disk.classList.add('disk');
-            disk.dataset.size = size;
-            disk.style.width = `${30 + size * 20}px`;
-            disk.style.height = `20px`;
-            disk.style.margin = '2px auto';
-            disk.style.backgroundColor = getColor(size);
-            return disk;
-        }
-
-        function getColor(size) {
-            const colors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4'];
-            return colors[(size - 1) % colors.length];
-        }
-
         function showHint() {
-            const towerEls = document.querySelectorAll('.tower');
-            const towers = Array.from(towerEls).map(t => {
+            // This is a placeholder. You would ideally maintain the game state in JS to compute hints.
+            // Here's a basic idea to simulate intelligence: find the smallest disk and suggest its legal move.
+            const towers = Array.from(document.querySelectorAll('.tower')).map(t => {
                 const disks = Array.from(t.children);
-                return disks.map(disk => ({
-                    size: parseInt(disk.dataset.size || disk.getAttribute('data-size')),
-                    el: disk
-                }));
+                return disks.map(d => parseInt(d.dataset.size));
             });
 
-            let from = -1, to = -1;
-            let smallestDisk = null;
-
+            // Find source and target tower for the smallest top disk
+            let from = -1, to = -1, smallest = Infinity;
             towers.forEach((tower, i) => {
-                if (tower.length > 0) {
-                    const topDisk = tower[tower.length - 1];
-                    if (!smallestDisk || topDisk.size < smallestDisk.size) {
-                        smallestDisk = topDisk;
-                        from = i;
-                    }
+                if (tower.length && tower[tower.length - 1] < smallest) {
+                    smallest = tower[tower.length - 1];
+                    from = i;
                 }
             });
 
-            if (!smallestDisk) {
-                document.getElementById("hint").innerText = "No hint available.";
-                return;
-            }
-
+            // Try to move to the first valid target tower
             for (let i = 0; i < 3; i++) {
                 if (i === from) continue;
-                const tower = towers[i];
-                const topDisk = tower[tower.length - 1];
-                if (!topDisk || topDisk.size > smallestDisk.size) {
+                const top = towers[i][towers[i].length - 1];
+                if (!top || top > smallest) {
                     to = i;
                     break;
                 }
@@ -92,12 +66,11 @@
 
             const names = ['Source', 'Auxiliary', 'Destination'];
             if (from >= 0 && to >= 0) {
-                document.getElementById("hint").innerText = `Hint: Move disk ${smallestDisk.size} from ${names[from]} to ${names[to]}.`;
+                document.getElementById("hint").innerText = `Hint: Move disk ${smallest} from ${names[from]} to ${names[to]}.`;
             } else {
                 document.getElementById("hint").innerText = "No hint available.";
             }
         }
     </script>
-    
 </body>
 </html>
