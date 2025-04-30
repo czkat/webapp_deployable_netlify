@@ -57,7 +57,7 @@
             const towers = Array.from(towerEls).map(t => {
                 const disks = Array.from(t.children);
                 return disks.map(disk => ({
-                    size: parseInt(disk.dataset.size),
+                    size: parseInt(disk.dataset.size || disk.getAttribute('data-size')),
                     el: disk
                 }));
             });
