@@ -98,6 +98,59 @@
             }
         }
     </script>
-    <script src="game.js"></script>
+    <script>
+        let selectedDisk = null;
+        let moveCount = 0;
+
+        document.querySelectorAll('.tower').forEach(tower => {
+            tower.addEventListener('click', () => {
+                if (!selectedDisk) {
+                    const top = tower.lastElementChild;
+                    if (top) {
+                        selectedDisk = top;
+                        top.classList.add('selected');
+                    }
+                } else {
+                    const targetTop = tower.lastElementChild;
+                    const selectedSize = parseInt(selectedDisk.dataset.size);
+                    const targetSize = targetTop ? parseInt(targetTop.dataset.size) : Infinity;
+
+                    if (selectedSize < targetSize) {
+                        tower.appendChild(selectedDisk);
+                        moveCount++;
+                        document.getElementById('moves').innerText = 'Moves: ' + moveCount;
+                    }
+                    selectedDisk.classList.remove('selected');
+                    selectedDisk = null;
+                }
+            });
+        });
+
+        function initializeGame(diskCount) {
+            const towers = document.querySelectorAll('.tower');
+
+            towers.forEach(tower => {
+                tower.innerHTML = '';
+            });
+
+            for (let i = diskCount; i >= 1; i--) {
+                const disk = createDisk(i);
+                towers[0].appendChild(disk);
+            }
+
+            moveCount = 0;
+            document.getElementById('moves').innerText = 'Moves: 0';
+            document.getElementById('message').innerText = '';
+            document.getElementById('hint').innerText = '';
+        }
+
+        function resetGame() {
+            const diskSelect = document.getElementById('diskCount');
+            const selectedDisks = parseInt(diskSelect.value);
+            initializeGame(selectedDisks);
+        }
+
+        window.onload = resetGame;
+    </script>
 </body>
 </html>
