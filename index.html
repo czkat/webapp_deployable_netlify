@@ -17,6 +17,7 @@
             <option value="6">6</option>
         </select>
         <button onclick="resetGame()">Reset</button>
+        <button onclick="showHint()">Hint</button>
     </div>
     <div id="game-container">
         <div id="game">
@@ -32,7 +33,44 @@
     </div>
     <p id="message"></p>
     <p id="moves">Moves: 0</p>
+    <p id="hint"></p>
 
     <script src="game.js"></script>
+    <script>
+        function showHint() {
+            // This is a placeholder. You would ideally maintain the game state in JS to compute hints.
+            // Here's a basic idea to simulate intelligence: find the smallest disk and suggest its legal move.
+            const towers = Array.from(document.querySelectorAll('.tower')).map(t => {
+                const disks = Array.from(t.children);
+                return disks.map(d => parseInt(d.dataset.size));
+            });
+
+            // Find source and target tower for the smallest top disk
+            let from = -1, to = -1, smallest = Infinity;
+            towers.forEach((tower, i) => {
+                if (tower.length && tower[tower.length - 1] < smallest) {
+                    smallest = tower[tower.length - 1];
+                    from = i;
+                }
+            });
+
+            // Try to move to the first valid target tower
+            for (let i = 0; i < 3; i++) {
+                if (i === from) continue;
+                const top = towers[i][towers[i].length - 1];
+                if (!top || top > smallest) {
+                    to = i;
+                    break;
+                }
+            }
+
+            const names = ['Source', 'Auxiliary', 'Destination'];
+            if (from >= 0 && to >= 0) {
+                document.getElementById("hint").innerText = `Hint: Move disk ${smallest} from ${names[from]} to ${names[to]}.`;
+            } else {
+                document.getElementById("hint").innerText = "No hint available.";
+            }
+        }
+    </script>
 </body>
 </html>
