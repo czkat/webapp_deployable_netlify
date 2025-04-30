@@ -32,6 +32,21 @@ function render() {
         document.getElementById('message').textContent = 'Congratulations. You won!';
     }
 }
+function createDisk(size) {
+    const disk = document.createElement('div');
+    disk.classList.add('disk');
+    disk.dataset.size = size;
+    disk.style.width = `${30 + size * 20}px`; // Adjust width as needed
+    disk.style.height = `20px`;
+    disk.style.margin = '2px auto';
+    disk.style.backgroundColor = getColor(size); // Optional: color based on size
+    return disk;
+}
+
+function getColor(size) {
+    const colors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4'];
+    return colors[(size - 1) % colors.length];
+}
 
 function moveDisk(from, to) {
     const fromTower = towers[from];
