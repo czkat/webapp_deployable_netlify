@@ -8,39 +8,82 @@ body {
 }
 
 .site-header {
-    width: 100%;
-    height: 150px;
-    overflow: hidden;
-    position: relative;
+    background-color: #ffffcc;
+    padding: 15px;
+    border-bottom: 3px solid #ffcc00;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.skyline-bg {
-    width: 100%;
-    height: 100%;
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwMCAzMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzAwNjZjYyIgLz4KICA8bGluZWFyR3JhZGllbnQgaWQ9InNreUdyYWRpZW50IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMDAwMDY2O3N0b3Atb3BhY2l0eToxIiAvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMDBjY2ZmO3N0b3Atb3BhY2l0eToxIiAvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgZmlsbD0idXJsKCNza3lHcmFkaWVudCkiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiLz4KICA8IS0tIENpdHkgQnVpbGRpbmdzIFNpbGhvdWV0dGUgLS0+CiAgPHBhdGggZD0iTTAgMjUwaDEwMDBWMTUwSDkwMHYyMGg0MHYtMjBoMjB2LTMwaDIwdjMwaDIwdi0yMGgzMHYtNDBoMjB2NDBoMzB2LTMwaDIwdjMwaDIwdi00MGg0MHYtMzBoMjB2MzBoMjB2LTIwaDQwdjIwaDE1MHYtMjBoNjB2LTQwaDIwdjQwaDIwdi02MGgyMHY2MGgyMHYtNDBoMjB2NDBoMjB2LTIwaDQwdjIwaDE1VjYwaDIwdjkwaDIwdjMwaDIwdi0zMGgyMHYtMjBoMTVzNSA0MCAyMCA0MHYtNDBoMjB2LTIwaDIwdjIwaDIwdi03MGgzMHY3MGgyMHYtNDBoMjB2LTIwaDQwdjIwaDIwdjQwaDIwdi0yMGgyMHYtNDBoNDBWODBoMzB2MTAwaDMwVjYwaDMwdjEyMGgyMFY0MGgzMHYxNDBoMjBWNjBoMzB2MTAwaDYwdi0yMGgzMHYyMGgzMHYtNDBoMjB2NDBoNDBWODBoNDB2NzBoMjB2LTQwaDQwdjQwaDIwdi0yMGgyMHYtMzBoMjB2MzBoMjB2LTIwaDIwdjIwaDIwdi01MGgyMHY1MEgweiIgZmlsbD0iIzAwMzM2NiIvPgogIDwhLS0gV2luZG93cyBhbmQgTGlnaHRzIC0tPgogIDxyZWN0IHg9IjEwMCIgeT0iMTQwIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIGZpbGw9IiNmZmZmMDAiIC8+CiAgPHJlY3QgeD0iMjIwIiB5PSIxMzAiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgZmlsbD0iI2ZmZmYwMCIgLz4KICA8cmVjdCB4PSIzNDAiIHk9IjEyMCIgd2lkdGg9IjE1IiBoZWlnaHQ9IjE1IiBmaWxsPSIjZmZmZjAwIiAvPgogIDxyZWN0IHg9IjQyMCIgeT0iMTQwIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIGZpbGw9IiNmZmZmMDAiIC8+CiAgPHJlY3QgeD0iNTAwIiB5PSIxMDAiIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSIgZmlsbD0iI2ZmZmYwMCIgLz4KICA8cmVjdCB4PSI1ODAiIHk9IjEyMCIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjZmZmZjAwIiAvPgogIDxyZWN0IHg9IjYyMCIgeT0iMTQwIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIGZpbGw9IiNmZmZmMDAiIC8+CiAgPHJlY3QgeD0iNzAwIiB5PSI5MCIgd2lkdGg9IjE1IiBoZWlnaHQ9IjE1IiBmaWxsPSIjZmZmZjAwIiAvPgogIDxyZWN0IHg9Ijc2MCIgeT0iMTIwIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIGZpbGw9IiNmZmZmMDAiIC8+CiAgPHJlY3QgeD0iODMwIiB5PSIxMDAiIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSIgZmlsbD0iI2ZmZmYwMCIgLz4KICA8cmVjdCB4PSI5MDAiIHk9IjEzMCIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjZmZmZjAwIiAvPgogIDwhLS0gU3RhcnMgLS0+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMSIgZmlsbD0id2hpdGUiIC8+CiAgPGNpcmNsZSBjeD0iMTUwIiBjeT0iMzAiIHI9IjEuNSIgZmlsbD0id2hpdGUiIC8+CiAgPGNpcmNsZSBjeD0iMjUwIiBjeT0iNzAiIHI9IjEiIGZpbGw9IndoaXRlIiAvPgogIDxjaXJjbGUgY3g9IjM1MCIgY3k9IjQwIiByPSIxLjUiIGZpbGw9IndoaXRlIiAvPgogIDxjaXJjbGUgY3g9IjQ1MCIgY3k9IjYwIiByPSIxIiBmaWxsPSJ3aGl0ZSIgLz4KICA8Y2lyY2xlIGN4PSI1NTAiIGN5PSIzMCIgcj0iMS41IiBmaWxsPSJ3aGl0ZSIgLz4KICA8Y2lyY2xlIGN4PSI2NTAiIGN5PSI3MCIgcj0iMSIgZmlsbD0id2hpdGUiIC8+CiAgPGNpcmNsZSBjeD0iNzUwIiBjeT0iNDAiIHI9IjEuNSIgZmlsbD0id2hpdGUiIC8+CiAgPGNpcmNsZSBjeD0iODUwIiBjeT0iNjAiIHI9IjEiIGZpbGw9IndoaXRlIiAvPgogIDxjaXJjbGUgY3g9Ijk1MCIgY3k9IjMwIiByPSIxLjUiIGZpbGw9IndoaXRlIiAvPgo8L3N2Zz4=');
-    background-size: cover;
-    background-position: center bottom;
+.header-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
 }
 
 h1 {
     color: #0e59a9;
-    margin-top: 20px;
+    margin: 0;
+    font-size: 2.2em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.next-game-button {
+    position: absolute;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+.arrow {
+    margin-left: 8px;
+    font-size: 1.2em;
 }
 
 .instruction {
-    margin-bottom: 20px;
+    margin: 20px 0;
     font-weight: bold;
+    background-color: #e6f7ff;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #b3e0ff;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #controls {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 15px 0 25px 0;
 }
 
 button {
     margin: 0 5px;
-    padding: 5px 10px;
+    padding: 8px 12px;
     cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+select {
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
 }
 
 #game-container {
@@ -73,7 +116,7 @@ button {
 
 .tower-container {
     width: 120px;
-    height: 300px;
+    height: 200px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -82,7 +125,7 @@ button {
 
 .peg-structure {
     position: absolute;
-    bottom: 10px;
+    bottom: 0;
     z-index: 1;
     display: flex;
     flex-direction: column;
@@ -91,7 +134,7 @@ button {
 
 .peg {
     width: 5px;
-    height: 230px;
+    height: 120px;  /* About 3cm at typical screen resolutions */
     background-color: #e23c33;
     border: 1px solid #000066;
     z-index: 1;
@@ -99,7 +142,7 @@ button {
 }
 
 .base {
-    width: 230px;
+    width: 120px;  /* About 3cm at typical screen resolutions */
     height: 5px;
     background-color: #e23c33;
     border: 1px solid #000066;
@@ -108,12 +151,14 @@ button {
 
 .tower {
     width: 120px;
-    height: 240px;
+    height: 140px;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
     position: relative;
     z-index: 2;
+    padding-bottom: 0;
+    bottom: 5px;  /* This aligns disks directly on the base */
 }
 
 .disk {
