@@ -258,5 +258,16 @@ function solve() {
     }, (Math.pow(2, totalDisks) - 1) * 1000));
 }
 
+// Add functionality to the Next Game button
+document.addEventListener('DOMContentLoaded', function() {
+    const nextGameButton = document.querySelector('.next-game-button');
+    if (nextGameButton) {
+        nextGameButton.addEventListener('click', function() {
+            // Here you could redirect to another game or show a menu
+            alert('Next game feature coming soon!');
+        });
+    }
+});
+
 // Initial game setup
 initializeGame(3);
