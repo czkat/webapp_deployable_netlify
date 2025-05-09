@@ -157,8 +157,8 @@ select {
     align-items: center;
     position: relative;
     z-index: 2;
+    justify-content: flex-end; /* This will push disks to the bottom */
     padding-bottom: 0;
-    bottom: 5px;  /* This aligns disks directly on the base */
 }
 
 .disk {
