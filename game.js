@@ -44,7 +44,7 @@ function createDisk(size) {
     const disk = document.createElement('div');
     disk.className = `disk size-${size}`;
     disk.dataset.size = size;
-    disk.style.width = `${size * 30}px`;
+    disk.style.width = `${40 + (size-1) * 20}px`;
     disk.textContent = size;
     
     // Add drag functionality
@@ -226,36 +226,111 @@ function calculateMinimumMoves(currentTowers, diskCount) {
 }
 
 // Solve the Tower of Hanoi automatically
-function solve() {
+unction solve() {
     if (solving) return;
     
     // Reset the game first
     resetGame();
     solving = true;
     
-    // Recursive function to solve Tower of Hanoi
-    function hanoiSolve(n, source, auxiliary, destination) {
+    // Set move durations
+    const moveDuration = 500; // 0.5 seconds for the move
+    const pauseDuration = 500; // 0.5 seconds pause between moves
+    const totalStepTime = moveDuration + pauseDuration;
+    
+    // Queue to store all moves
+    const moveQueue = [];
+    
+    // Recursive function to determine all moves needed
+    function hanoiMoves(n, source, auxiliary, destination) {
         if (n === 0) return;
         
         // Move n-1 disks from source to auxiliary
-        hanoiSolve(n-1, source, destination, auxiliary);
+        hanoiMoves(n-1, source, destination, auxiliary);
         
         // Move the nth disk from source to destination
-        solvingTimeouts.push(setTimeout(() => {
-            moveDisk(source, destination);
-        }, moveCount * 1000)); // 1 second delay between moves
+        moveQueue.push([source, destination]);
         
         // Move n-1 disks from auxiliary to destination
-        hanoiSolve(n-1, auxiliary, source, destination);
+        hanoiMoves(n-1, auxiliary, source, destination);
     }
     
-    // Start solving
-    hanoiSolve(totalDisks, 0, 1, 2);
+    // Calculate all moves needed
+    hanoiMoves(totalDisks, 0, 1, 2);
+    
+    // Execute moves with animation
+    moveQueue.forEach((move, index) => {
+        solvingTimeouts.push(setTimeout(() => {
+            const [from, to] = move;
+            
+            // Animate the move
+            animateMove(from, to, moveDuration);
+        }, index * totalStepTime));
+    });
     
     // Reset solving status after completion
     solvingTimeouts.push(setTimeout(() => {
         solving = false;
-    }, (Math.pow(2, totalDisks) - 1) * 1000));
+    }, moveQueue.length * totalStepTime));
+}
+
+// Add a new function to animate disk movement
+function animateMove(from, to, duration) {
+    const fromTower = document.querySelector(`.tower[data-index="${from}"]`);
+    const toTower = document.querySelector(`.tower[data-index="${to}"]`);
+    
+    if (!towers[from].length) return;
+    
+    const diskToMove = fromTower.lastChild;
+    const diskValue = towers[from][towers[from].length - 1];
+    
+    // Create a clone for animation
+    const diskClone = diskToMove.cloneNode(true);
+    document.body.appendChild(diskClone);
+    
+    // Position the clone at the source disk position
+    const diskRect = diskToMove.getBoundingClientRect();
+    const toTowerRect = toTower.getBoundingClientRect();
+    
+    diskClone.style.position = 'fixed';
+    diskClone.style.left = `${diskRect.left}px`;
+    diskClone.style.top = `${diskRect.top}px`;
+    diskClone.style.zIndex = '1000';
+    
+    // Calculate destination position (at the top of the target tower)
+    const destX = toTowerRect.left + (toTowerRect.width - diskRect.width) / 2;
+    const destY = toTowerRect.bottom - diskRect.height;
+    
+    // Hide the original disk during animation
+    diskToMove.style.visibility = 'hidden';
+    
+    // Animate
+    const startTime = performance.now();
+    function animate(currentTime) {
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / duration, 1);
+        
+        const currentX = diskRect.left + (destX - diskRect.left) * progress;
+        const currentY = diskRect.top + (destY - diskRect.top) * progress;
+        
+        diskClone.style.left = `${currentX}px`;
+        diskClone.style.top = `${currentY}px`;
+        
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        } else {
+            // Animation complete
+            document.body.removeChild(diskClone);
+            
+            // Actually move the disk in the game state
+            moveDisk(from, to);
+            
+            // Restore visibility of the original disk (now in its new position)
+            fromTower.lastChild?.style.removeProperty('visibility');
+        }
+    }
+    
+    requestAnimationFrame(animate);
 }
 
 // Add functionality to the Next Game button
