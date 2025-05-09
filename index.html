@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,8 @@
 </head>
 <body>
     <h1>Tower of Hanoi</h1>
+    <p class="instruction">Goal: The object of the game is to move all the disks over to the destination tower using drag and drop.<br>
+    Rule: You cannot place a larger disk onto a smaller disk</p>
     <div id="controls">
         <label for="diskCount">Number of disks:</label>
         <select id="diskCount">
@@ -18,85 +21,45 @@
         </select>
         <button onclick="resetGame()">Reset</button>
         <button onclick="showHint()">Hint</button>
+        <button onclick="showLog()">Log</button>
+        <button onclick="solve()">Solve!</button>
     </div>
     <div id="game-container">
         <div id="game">
-            <div class="tower" data-index="0"></div>
-            <div class="tower" data-index="1"></div>
-            <div class="tower" data-index="2"></div>
+            <div class="tower-container" data-index="0">
+                <div class="peg"></div>
+                <div class="tower" data-index="0"></div>
+            </div>
+            <div class="tower-container" data-index="1">
+                <div class="peg"></div>
+                <div class="tower" data-index="1"></div>
+            </div>
+            <div class="tower-container" data-index="2">
+                <div class="peg"></div>
+                <div class="tower" data-index="2"></div>
+            </div>
         </div>
         <div id="labels">
-            <div class="label">Source</div>
-            <div class="label">Auxiliary</div>
-            <div class="label">Destination</div>
+            <div class="label">Source (A)</div>
+            <div class="label">Auxiliary (B)</div>
+            <div class="label">Destination (C)</div>
         </div>
     </div>
     <p id="message"></p>
-    <p id="moves">Moves: 0</p>
+    <div id="stats">
+        <p id="moves">Moves: 0</p>
+        <p id="min-moves">Minimum Moves: 7</p>
+    </div>
     <p id="hint"></p>
+    
+    <div id="log-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Move Log</h2>
+            <div id="log-content" class="unselectable"></div>
+        </div>
+    </div>
 
     <script src="game.js"></script>
-    <script>
-        function showHint() {
-            // Calculate optimal solution steps
-            const optimalMoves = Math.pow(2, totalDisks) - 1;
-            const progress = Math.min(100, Math.round((moveCount / optimalMoves) * 100));
-            
-            // Analyze game state
-            const state = analyzeGameState();
-            
-            // Generate context-aware hints
-            let hint = "";
-            
-            if (moveCount === 0) {
-                hint = "Start by moving the smallest disk. For an odd number of disks, move it to the destination tower; for even, move to the auxiliary tower.";
-            } else if (state.isStuck) {
-                hint = "You seem stuck. Remember the pattern: move the smallest disk in a clockwise direction (A to B, B to C, or C to A), then make the only valid move that doesn't involve the smallest disk.";
-            } else if (state.suboptimalMoves > 5) {
-                hint = "Your solution is taking longer than needed. Try to develop a consistent pattern when moving the disks.";
-            } else if (state.nearCompletion) {
-                hint = "You're almost there! Focus on moving the remaining smaller disks in the right sequence to build on top of the larger ones.";
-            } else {
-                // Choose a hint based on the specific game situation
-                const situationalHints = [
-                    "Look for the smallest disk - it should move in a consistent cycle between towers.",
-                    "After moving the smallest disk, there's always exactly one other valid move. Can you spot it?",
-                    "Think about which tower needs to be cleared to receive the next largest disk.",
-                    "The Tower of Hanoi has a recursive pattern. How you moved 2 disks is how you'll move groups of disks.",
-                    "Sometimes you need to make moves that temporarily seem to take you further from your goal."
-                ];
-                
-                // Choose a hint based on disk count, move count, and tower state
-                const hintIndex = (moveCount + totalDisks + towers[1].length) % situationalHints.length;
-                hint = situationalHints[hintIndex];
-            }
-            
-            document.getElementById("hint").innerHTML = hint;
-        }
-
-        function analyzeGameState() {
-            // Analyze the current game state to determine key characteristics
-            return {
-                isStuck: moveCount > 0 && previousMoveCount === moveCount, // Detect if player is stuck
-                suboptimalMoves: moveCount - calculateMinimumMoves(towers, totalDisks),
-                nearCompletion: towers[2].length >= totalDisks - 2,
-                // Add other state analysis as needed
-            };
-        }
-
-        // Keep track of previous move count to detect when player is stuck
-        let previousMoveCount = 0;
-        setInterval(() => {
-            previousMoveCount = moveCount;
-        }, 5000);
-
-        function calculateMinimumMoves(currentTowers, diskCount) {
-            // A basic estimate of minimum moves needed from current state
-            // This is a simplified calculation
-            return Math.pow(2, diskCount) - 1 - towers[2].length * 2;
-        }
-     
-    </script>
-
 </body>
 </html>
