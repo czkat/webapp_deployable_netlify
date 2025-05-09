@@ -226,7 +226,7 @@ function calculateMinimumMoves(currentTowers, diskCount) {
 }
 
 // Solve the Tower of Hanoi automatically
-unction solve() {
+function solve() {
     if (solving) return;
     
     // Reset the game first
@@ -274,7 +274,6 @@ unction solve() {
     }, moveQueue.length * totalStepTime));
 }
 
-// Add a new function to animate disk movement
 function animateMove(from, to, duration) {
     const fromTower = document.querySelector(`.tower[data-index="${from}"]`);
     const toTower = document.querySelector(`.tower[data-index="${to}"]`);
@@ -282,6 +281,8 @@ function animateMove(from, to, duration) {
     if (!towers[from].length) return;
     
     const diskToMove = fromTower.lastChild;
+    if (!diskToMove) return;
+    
     const diskValue = towers[from][towers[from].length - 1];
     
     // Create a clone for animation
@@ -297,9 +298,13 @@ function animateMove(from, to, duration) {
     diskClone.style.top = `${diskRect.top}px`;
     diskClone.style.zIndex = '1000';
     
-    // Calculate destination position (at the top of the target tower)
+    // Calculate destination position (bottom of the tower, on top of existing disks)
     const destX = toTowerRect.left + (toTowerRect.width - diskRect.width) / 2;
-    const destY = toTowerRect.bottom - diskRect.height;
+    let destY;
+    
+    // Calculate the position based on existing disks in the target tower
+    const targetTowerDiskCount = towers[to].length;
+    destY = toTowerRect.bottom - diskRect.height - (targetTowerDiskCount * diskRect.height);
     
     // Hide the original disk during animation
     diskToMove.style.visibility = 'hidden';
@@ -325,8 +330,7 @@ function animateMove(from, to, duration) {
             // Actually move the disk in the game state
             moveDisk(from, to);
             
-            // Restore visibility of the original disk (now in its new position)
-            fromTower.lastChild?.style.removeProperty('visibility');
+            // No need to manually restore visibility as the render() function in moveDisk will create new elements
         }
     }
     
