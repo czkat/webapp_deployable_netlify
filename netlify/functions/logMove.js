@@ -1,14 +1,3 @@
-
-// exports.handler = async (event, context) => {
-//   const data = JSON.parse(event.body);
-//   console.log("User made a move:", data.moves);
-
-//   return {
-//     statusCode: 200,
-//     body: JSON.stringify({ message: "Move logged!" }),
-//   };
-// };
-
 // netlify/functions/logMove.js
 exports.handler = async (event) => {
   try {
